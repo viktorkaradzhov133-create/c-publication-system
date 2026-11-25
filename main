@@ -1,0 +1,68 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Publication {
+protected:
+    string title;
+
+public:
+    Publication(string t) : title(t) {}
+
+    virtual void display() {
+        cout << "Title: " << title << endl;
+    }
+
+    virtual ~Publication() {}
+};
+
+class Book : public Publication {
+protected:
+    string author;
+
+public:
+    Book(string t, string a)
+        : Publication(t), author(a) {}
+
+    void display() override {
+        Publication::display();
+        cout << "Author: " << author << endl;
+    }
+};
+
+class Textbook : public Book {
+private:
+    string subject;
+
+public:
+    Textbook(string t, string a, string s)
+        : Book(t, a), subject(s) {}
+
+    void display() override {
+        Book::display();
+        cout << "Subject: " << subject << endl;
+    }
+};
+
+int main() {
+    Publication* p;
+
+    p = new Publication("Introduction to C++");
+    p->display();
+    delete p;
+    cout << endl;
+
+    p = new Book("The C++ Programming Language",
+                 "Bjarne Stroustrup");
+    p->display();
+    delete p;
+    cout << endl;
+
+    p = new Textbook("Algorithms",
+                     "Thomas H. Cormen",
+                     "Computer Science");
+    p->display();
+    delete p;
+
+    return 0;
+}
